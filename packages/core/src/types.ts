@@ -6,6 +6,77 @@ export type JsonValue = string | number | boolean | null | JsonValue[] | { [key:
 
 export type Payload = Record<string, JsonValue | undefined>;
 
+export type RuleOperator =
+  | "includes"
+  | "regex"
+  | "equals"
+  | "notEquals"
+  | "in"
+  | "gte"
+  | "lte"
+  | "exists";
+
+export interface RuleCondition {
+  fact: string;
+  operator: RuleOperator;
+  value?: JsonValue;
+}
+
+export interface RuleWhen {
+  all?: RuleCondition[];
+  any?: RuleCondition[];
+  not?: RuleCondition[];
+}
+
+export type RuleActionType = "route" | "setPayload" | "setDraft" | "suggest";
+
+export interface RuleAction {
+  type: RuleActionType;
+  sceneCode?: string;
+  field?: string;
+  value?: JsonValue;
+  score?: number;
+  suggestion?: string;
+}
+
+export interface SceneRule {
+  id: string;
+  description?: string;
+  when: RuleWhen;
+  then: RuleAction[];
+}
+
+export interface RuleEvaluation {
+  matchedRuleIds: string[];
+  routeScores: Record<string, number>;
+  payload: Payload;
+  draft: Payload;
+  suggestions: string[];
+}
+
+export type SceneGraphRelation = "related" | "next" | "fallback";
+
+export interface SceneGraphNode {
+  sceneCode: string;
+  weight?: number;
+  tags?: string[];
+}
+
+export interface SceneGraphEdge {
+  from: string;
+  to: string;
+  relation: SceneGraphRelation;
+  weight?: number;
+  guard?: RuleWhen;
+}
+
+export interface SceneGraphDefinition {
+  version: string;
+  nodes: SceneGraphNode[];
+  edges?: SceneGraphEdge[];
+  rules?: SceneRule[];
+}
+
 export interface AiFieldDefinition {
   key: string;
   label: string;
@@ -101,4 +172,3 @@ export interface SanitizedPayload {
   missingFields: string[];
   contractVersion: string;
 }
-

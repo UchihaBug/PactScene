@@ -1,0 +1,168 @@
+{
+  "version": "1.0.0",
+  "nodes": [
+    {
+      "sceneCode": "demo.order.query",
+      "weight": 0.2,
+      "tags": ["commerce", "query"]
+    },
+    {
+      "sceneCode": "demo.lead.create",
+      "weight": 0.2,
+      "tags": ["crm", "create"]
+    },
+    {
+      "sceneCode": "demo.incident.query",
+      "weight": 0.2,
+      "tags": ["operations", "query"]
+    }
+  ],
+  "edges": [
+    {
+      "from": "demo.order.query",
+      "to": "demo.lead.create",
+      "relation": "related",
+      "weight": 0.4
+    },
+    {
+      "from": "demo.incident.query",
+      "to": "demo.order.query",
+      "relation": "related",
+      "weight": 0.3
+    },
+    {
+      "from": "demo.lead.create",
+      "to": "demo.order.query",
+      "relation": "next",
+      "weight": 0.4
+    }
+  ],
+  "rules": [
+    {
+      "id": "route-order-query",
+      "when": {
+        "any": [
+          { "fact": "message", "operator": "includes", "value": "order" },
+          { "fact": "message", "operator": "includes", "value": "subscription" },
+          { "fact": "message", "operator": "includes", "value": "shipment" }
+        ]
+      },
+      "then": [
+        { "type": "route", "sceneCode": "demo.order.query", "score": 6 }
+      ]
+    },
+    {
+      "id": "order-open-status",
+      "when": {
+        "any": [
+          { "fact": "message", "operator": "includes", "value": "open" },
+          { "fact": "message", "operator": "includes", "value": "active" }
+        ]
+      },
+      "then": [
+        { "type": "setPayload", "field": "status", "value": "open" }
+      ]
+    },
+    {
+      "id": "order-current-month",
+      "when": {
+        "any": [
+          { "fact": "message", "operator": "includes", "value": "this month" },
+          { "fact": "message", "operator": "includes", "value": "current month" }
+        ]
+      },
+      "then": [
+        { "type": "setPayload", "field": "startDate", "value": "2026-07-01" },
+        { "type": "setPayload", "field": "endDate", "value": "2026-07-31" }
+      ]
+    },
+    {
+      "id": "order-north-region",
+      "when": {
+        "any": [
+          { "fact": "message", "operator": "includes", "value": "north" },
+          { "fact": "message", "operator": "includes", "value": "northern" }
+        ]
+      },
+      "then": [
+        { "type": "setPayload", "field": "region", "value": "north" }
+      ]
+    },
+    {
+      "id": "route-lead-create",
+      "when": {
+        "any": [
+          { "fact": "message", "operator": "includes", "value": "lead" },
+          { "fact": "message", "operator": "includes", "value": "prospect" },
+          { "fact": "message", "operator": "includes", "value": "customer" }
+        ]
+      },
+      "then": [
+        { "type": "route", "sceneCode": "demo.lead.create", "score": 6 },
+        { "type": "setDraft", "field": "priority", "value": "normal" },
+        { "type": "setDraft", "field": "notes", "value": "Created from the demo scene graph." }
+      ]
+    },
+    {
+      "id": "lead-acme-labs",
+      "when": {
+        "any": [
+          { "fact": "message", "operator": "includes", "value": "acme labs" }
+        ]
+      },
+      "then": [
+        { "type": "setDraft", "field": "company", "value": "Acme Labs" }
+      ]
+    },
+    {
+      "id": "lead-software-industry",
+      "when": {
+        "any": [
+          { "fact": "message", "operator": "includes", "value": "software" },
+          { "fact": "message", "operator": "includes", "value": "saas" }
+        ]
+      },
+      "then": [
+        { "type": "setDraft", "field": "industry", "value": "software" }
+      ]
+    },
+    {
+      "id": "route-incident-query",
+      "when": {
+        "any": [
+          { "fact": "message", "operator": "includes", "value": "incident" },
+          { "fact": "message", "operator": "includes", "value": "alert" },
+          { "fact": "message", "operator": "includes", "value": "outage" }
+        ]
+      },
+      "then": [
+        { "type": "route", "sceneCode": "demo.incident.query", "score": 6 }
+      ]
+    },
+    {
+      "id": "incident-critical",
+      "when": {
+        "any": [
+          { "fact": "message", "operator": "includes", "value": "critical" },
+          { "fact": "message", "operator": "includes", "value": "severe" }
+        ]
+      },
+      "then": [
+        { "type": "setPayload", "field": "severity", "value": "critical" }
+      ]
+    },
+    {
+      "id": "owned-by-me",
+      "when": {
+        "any": [
+          { "fact": "message", "operator": "includes", "value": "assigned to me" },
+          { "fact": "message", "operator": "includes", "value": "my queue" }
+        ]
+      },
+      "then": [
+        { "type": "setPayload", "field": "owner", "value": "me" }
+      ]
+    }
+  ]
+}
+

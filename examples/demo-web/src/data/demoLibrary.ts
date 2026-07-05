@@ -1,4 +1,4 @@
-import type { AiSceneContract, AiSceneDefinition, AiQueryDispatchCard, Payload } from "@pactscene/core";
+import type { AiSceneContract, AiSceneDefinition, AiQueryDispatchCard, Payload, SceneGraphDefinition } from "@pactscene/core";
 
 import orderScene from "../../../../spec/examples/scenes/demo.order.query.json";
 import leadScene from "../../../../spec/examples/scenes/demo.lead.create.json";
@@ -6,9 +6,11 @@ import incidentScene from "../../../../spec/examples/scenes/demo.incident.query.
 import orderContract from "../../../../spec/examples/contracts/demo.order.query.contract.json";
 import leadContract from "../../../../spec/examples/contracts/demo.lead.create.contract.json";
 import incidentContract from "../../../../spec/examples/contracts/demo.incident.query.contract.json";
+import demoSceneGraph from "../../../../spec/examples/graphs/demo-scene-graph.json";
 
 export const demoScenes = [orderScene, leadScene, incidentScene] as AiSceneDefinition[];
 export const demoContracts = [orderContract, leadContract, incidentContract] as AiSceneContract[];
+export const demoGraph = demoSceneGraph as SceneGraphDefinition;
 
 export interface DemoOrderRow {
   id: string;

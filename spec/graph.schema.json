@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pactscene.dev/spec/graph.schema.json",
+  "title": "AI Scene Graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "nodes"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "nodes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/node" },
+      "minItems": 1
+    },
+    "edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "rules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rule" }
+    }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sceneCode"],
+      "properties": {
+        "sceneCode": { "type": "string" },
+        "weight": { "type": "number" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "relation"],
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "relation": { "enum": ["related", "next", "fallback"] },
+        "weight": { "type": "number" },
+        "guard": { "$ref": "#/$defs/when" }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "when", "then"],
+      "properties": {
+        "id": { "type": "string" },
+        "description": { "type": "string" },
+        "when": { "$ref": "#/$defs/when" },
+        "then": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/action" },
+          "minItems": 1
+        }
+      }
+    },
+    "when": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "all": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" }
+        },
+        "any": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" }
+        },
+        "not": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" }
+        }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fact", "operator"],
+      "properties": {
+        "fact": { "type": "string" },
+        "operator": {
+          "enum": ["includes", "regex", "equals", "notEquals", "in", "gte", "lte", "exists"]
+        },
+        "value": {}
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["route", "setPayload", "setDraft", "suggest"] },
+        "sceneCode": { "type": "string" },
+        "field": { "type": "string" },
+        "value": {},
+        "score": { "type": "number" },
+        "suggestion": { "type": "string" }
+      }
+    }
+  }
+}
+

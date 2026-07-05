@@ -1,15 +1,15 @@
 import { useMemo, useState } from "react";
 import { Boxes, FileJson2, History, LayoutDashboard, ShieldCheck } from "lucide-react";
-import { collectSuggestions, planDemoMessage, type AiAssistantResponse, type AiQueryDispatchCard } from "@pactscene/core";
+import { collectGraphSuggestions, planGraphMessage, type AiAssistantResponse, type AiQueryDispatchCard } from "@pactscene/core";
 import { ContractInspector, QueryPreviewTable, SceneCard, WorkbenchComposer, type QueryPreviewColumn } from "@pactscene/react-runtime";
 import sceneIndex from "./generated/scene-index.json";
-import { demoContracts, demoScenes, isOrderRow, runDemoQuery, type DemoResultRow } from "./data/demoLibrary";
+import { demoContracts, demoGraph, demoScenes, isOrderRow, runDemoQuery, type DemoResultRow } from "./data/demoLibrary";
 import "./styles.css";
 
 const initialResponse: AiAssistantResponse = {
   reply: "Ready.",
   cards: [],
-  suggestions: collectSuggestions(demoScenes)
+  suggestions: collectGraphSuggestions(demoScenes, demoGraph)
 };
 
 const navItems = [
@@ -51,7 +51,7 @@ export function App() {
   const rows = useMemo(() => runDemoQuery(queryCard), [queryCard]);
 
   const submitPrompt = () => {
-    setResponse(planDemoMessage(prompt, demoScenes, demoContracts, { today: new Date("2026-07-05") }));
+    setResponse(planGraphMessage(prompt, demoScenes, demoContracts, demoGraph));
   };
 
   return (
@@ -84,7 +84,7 @@ export function App() {
           <div className="status-strip">
             <span>Apache-2.0</span>
             <span>No secrets</span>
-            <span>Fake data</span>
+            <span>Scene graph</span>
           </div>
         </header>
 

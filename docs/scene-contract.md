@@ -1,6 +1,6 @@
 # Scene Contract
 
-A scene contract is the boundary between untrusted AI output and the host application.
+A scene contract is the boundary between untrusted AI output and the host application. Scene graph rules can propose payload fields, but the contract still decides what fields survive.
 
 ```json
 {
@@ -10,7 +10,7 @@ A scene contract is the boundary between untrusted AI output and the host applic
   "query": {
     "allowedFields": ["status", "startDate", "endDate"],
     "fields": [
-      { "key": "status", "type": "enum", "enum": ["pending", "approved", "paid"] },
+      { "key": "status", "type": "enum", "enum": ["open", "processing", "shipped"] },
       { "key": "startDate", "type": "date" },
       { "key": "endDate", "type": "date" }
     ]

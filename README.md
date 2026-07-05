@@ -13,7 +13,7 @@ The AI layer does not become the system of record. It only recognizes intent, ex
 ## What This Repository Contains
 
 - `spec/`: JSON Schemas for scenes, contracts, and assistant cards.
-- `packages/core`: TypeScript scene registry, payload sanitizer, and deterministic demo planner.
+- `packages/core`: TypeScript scene registry, payload sanitizer, scene graph planner, and rule engine.
 - `packages/react-runtime`: React components for workbench panels, scene cards, and inspectors.
 - `examples/demo-web`: A fake-data demo app with neutral order, lead, and incident scenes.
 - `gateway-spring`: A Java 17 / Spring Boot reference gateway skeleton with no provider key.
@@ -53,12 +53,30 @@ PactScene uses four guardrails:
 
 1. **Scene registry**: maps model intent to a known `sceneCode`.
 2. **Contract schema**: declares allowed fields and versions.
-3. **Payload sanitizer**: removes fields not declared in the contract.
-4. **Host adapter**: lets the real page or API decide what the sanitized payload can do.
+3. **Scene graph + rules**: ranks candidate scenes and extracts safe draft/query facts.
+4. **Payload sanitizer**: removes fields not declared in the contract.
+5. **Host adapter**: lets the real page or API decide what the sanitized payload can do.
 
 If a scene has no contract, the reference sanitizer fails closed and rejects the payload.
 
 The AI result is never treated as permission to bypass the underlying application.
+
+## Repository Strategy
+
+Keep reusable framework capabilities in this repository:
+
+- scene, contract, card, and graph schemas
+- core rule engine and scene graph planner
+- runtime UI components
+- small neutral examples that prove the protocol
+
+Keep complete product examples in separate repositories:
+
+- CRM, ERP, support, analytics, or vertical business apps
+- backend stacks such as GraphQL, REST, Spring Boot, or Fastify
+- database seeds and application-specific adapters
+
+This keeps PactScene generic while letting example apps evolve independently.
 
 ## Publish Checklist
 
