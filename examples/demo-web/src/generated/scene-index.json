@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-07-05T06:53:19.988Z",
+  "scenes": [
+    {
+      "code": "demo.incident.query",
+      "intent": "incident_query",
+      "sceneType": "query",
+      "label": "Incidents",
+      "suggestions": [
+        "find critical incidents",
+        "show open incidents assigned to me",
+        "list waiting incidents"
+      ]
+    },
+    {
+      "code": "demo.lead.create",
+      "intent": "lead_create",
+      "sceneType": "create",
+      "label": "Sales lead",
+      "suggestions": [
+        "create a software lead for Acme Labs",
+        "draft a prospect from the healthcare industry",
+        "create a high priority sales lead"
+      ]
+    },
+    {
+      "code": "demo.order.query",
+      "intent": "order_query",
+      "sceneType": "query",
+      "label": "Orders",
+      "suggestions": [
+        "show open orders this month",
+        "find shipped orders above 5000",
+        "list orders for the north region"
+      ]
+    }
+  ]
+}

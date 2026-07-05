@@ -1,0 +1,37 @@
+{
+  "sceneCode": "demo.order.query",
+  "version": "1.0.0",
+  "sceneType": "query",
+  "query": {
+    "allowedFields": ["status", "startDate", "endDate", "minAmount", "region", "archived"],
+    "fields": [
+      {
+        "key": "status",
+        "type": "enum",
+        "enum": ["open", "processing", "shipped"]
+      },
+      {
+        "key": "startDate",
+        "type": "date"
+      },
+      {
+        "key": "endDate",
+        "type": "date"
+      },
+      {
+        "key": "minAmount",
+        "type": "money",
+        "min": 0
+      },
+      {
+        "key": "region",
+        "type": "enum",
+        "enum": ["north", "south", "west"]
+      },
+      {
+        "key": "archived",
+        "type": "boolean"
+      }
+    ]
+  }
+}

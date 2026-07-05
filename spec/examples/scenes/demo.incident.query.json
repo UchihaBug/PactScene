@@ -1,0 +1,43 @@
+{
+  "code": "demo.incident.query",
+  "intent": "incident_query",
+  "sceneType": "query",
+  "label": "Incidents",
+  "promptHints": [
+    "incident",
+    "alert",
+    "outage",
+    "system issue"
+  ],
+  "suggestions": [
+    "find critical incidents",
+    "show open incidents assigned to me",
+    "list waiting incidents"
+  ],
+  "query": {
+    "filterFields": [
+      {
+        "key": "severity",
+        "label": "Severity",
+        "type": "enum",
+        "enum": ["low", "normal", "critical"]
+      },
+      {
+        "key": "status",
+        "label": "Status",
+        "type": "enum",
+        "enum": ["open", "waiting", "closed"]
+      },
+      {
+        "key": "owner",
+        "label": "Owner",
+        "type": "string"
+      }
+    ]
+  },
+  "host": {
+    "hostKey": "demoIncidentQueryHost",
+    "mode": "embed_query",
+    "continueRoute": "/demo/incidents"
+  }
+}

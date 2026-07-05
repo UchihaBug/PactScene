@@ -1,0 +1,24 @@
+{
+  "name": "pactscene",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A schema-first AI scene workbench framework for safely connecting natural language to existing business screens.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "npm run generate && npm run build:packages && npm run build --workspace @pactscene/demo-web",
+    "build:packages": "npm run build --workspace @pactscene/core && npm run build --workspace @pactscene/react-runtime",
+    "dev": "npm run generate && npm run build:packages && npm run dev --workspace @pactscene/demo-web -- --host 127.0.0.1",
+    "generate": "node scripts/generate-demo-index.mjs",
+    "risk:scan": "node scripts/risk-scan.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "typescript": "^5.5.4"
+  }
+}
+

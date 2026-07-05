@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pactscene.dev/spec/card.schema.json",
+  "title": "AI Workbench Card",
+  "oneOf": [
+    { "$ref": "#/$defs/queryDispatchCard" },
+    { "$ref": "#/$defs/sceneFormCard" }
+  ],
+  "$defs": {
+    "queryDispatchCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "sceneCode", "prefill", "metadata"],
+      "properties": {
+        "type": { "const": "query_dispatch" },
+        "sceneCode": { "type": "string" },
+        "prefill": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "rejectedFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "metadata": { "$ref": "#/$defs/cardMetadata" }
+      }
+    },
+    "sceneFormCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "sceneCode", "draft", "missingFields", "metadata"],
+      "properties": {
+        "type": { "const": "scene_form" },
+        "sceneCode": { "type": "string" },
+        "draft": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "missingFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rejectedFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "metadata": { "$ref": "#/$defs/cardMetadata" }
+      }
+    },
+    "cardMetadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["sceneType", "mode", "intent", "parser", "contractMode", "contractVersion"],
+      "properties": {
+        "sceneType": { "enum": ["query", "create"] },
+        "mode": { "type": "string" },
+        "intent": { "type": "string" },
+        "parser": { "type": "string" },
+        "contractMode": { "type": "string" },
+        "contractVersion": { "type": "string" }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,30 @@
+{
+  "sceneCode": "demo.lead.create",
+  "version": "1.0.0",
+  "sceneType": "create",
+  "create": {
+    "allowedFields": ["company", "industry", "priority", "notes"],
+    "requiredFields": ["company", "industry", "priority", "notes"],
+    "fields": [
+      {
+        "key": "company",
+        "type": "string"
+      },
+      {
+        "key": "industry",
+        "type": "enum",
+        "enum": ["software", "healthcare", "education"]
+      },
+      {
+        "key": "priority",
+        "type": "enum",
+        "enum": ["low", "normal", "high"]
+      },
+      {
+        "key": "notes",
+        "type": "string"
+      }
+    ],
+    "dangerousAction": false
+  }
+}

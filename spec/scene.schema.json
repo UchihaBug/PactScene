@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pactscene.dev/spec/scene.schema.json",
+  "title": "AI Scene",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["code", "intent", "sceneType", "label"],
+  "properties": {
+    "code": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)+\\.(query|create)$"
+    },
+    "intent": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "sceneType": {
+      "enum": ["query", "create"]
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "promptHints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "suggestions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "query": {
+      "$ref": "#/$defs/queryScene"
+    },
+    "form": {
+      "$ref": "#/$defs/formScene"
+    },
+    "host": {
+      "$ref": "#/$defs/host"
+    }
+  },
+  "$defs": {
+    "queryScene": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "filterFields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/field" }
+        },
+        "fixedParams": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "formScene": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "draftFields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/field" }
+        }
+      }
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "label", "type"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][A-Za-z0-9]*$"
+        },
+        "label": {
+          "type": "string"
+        },
+        "type": {
+          "enum": ["string", "number", "money", "date", "date-range", "enum", "id", "boolean"]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "enum": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "aliases": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hostKey"],
+      "properties": {
+        "hostKey": { "type": "string" },
+        "mode": {
+          "enum": ["embed_query", "route_query", "embed_form", "route_form"]
+        },
+        "continueRoute": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
+

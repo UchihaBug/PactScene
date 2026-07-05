@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pactscene.dev/spec/contract.schema.json",
+  "title": "AI Scene Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sceneCode", "version", "sceneType"],
+  "properties": {
+    "sceneCode": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "sceneType": {
+      "enum": ["query", "create"]
+    },
+    "query": {
+      "$ref": "#/$defs/payloadContract"
+    },
+    "create": {
+      "$ref": "#/$defs/payloadContract"
+    }
+  },
+  "$defs": {
+    "payloadContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowedFields", "fields"],
+      "properties": {
+        "allowedFields": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "requiredFields": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/fieldRule" }
+        },
+        "dangerousAction": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "fieldRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "type"],
+      "properties": {
+        "key": { "type": "string" },
+        "type": {
+          "enum": ["string", "number", "money", "date", "date-range", "enum", "id", "boolean"]
+        },
+        "enum": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "format": { "type": "string" }
+      }
+    }
+  }
+}
+

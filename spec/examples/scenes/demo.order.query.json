@@ -1,0 +1,56 @@
+{
+  "code": "demo.order.query",
+  "intent": "order_query",
+  "sceneType": "query",
+  "label": "Orders",
+  "promptHints": [
+    "order",
+    "subscription",
+    "shipment",
+    "customer order"
+  ],
+  "suggestions": [
+    "show open orders this month",
+    "find shipped orders above 5000",
+    "list orders for the north region"
+  ],
+  "query": {
+    "filterFields": [
+      {
+        "key": "status",
+        "label": "Status",
+        "type": "enum",
+        "enum": ["open", "processing", "shipped"]
+      },
+      {
+        "key": "startDate",
+        "label": "Start date",
+        "type": "date"
+      },
+      {
+        "key": "endDate",
+        "label": "End date",
+        "type": "date"
+      },
+      {
+        "key": "minAmount",
+        "label": "Minimum amount",
+        "type": "money"
+      },
+      {
+        "key": "region",
+        "label": "Region",
+        "type": "enum",
+        "enum": ["north", "south", "west"]
+      }
+    ],
+    "fixedParams": {
+      "archived": false
+    }
+  },
+  "host": {
+    "hostKey": "demoOrderQueryHost",
+    "mode": "embed_query",
+    "continueRoute": "/demo/orders"
+  }
+}

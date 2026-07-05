@@ -1,0 +1,24 @@
+{
+  "sceneCode": "demo.incident.query",
+  "version": "1.0.0",
+  "sceneType": "query",
+  "query": {
+    "allowedFields": ["severity", "status", "owner"],
+    "fields": [
+      {
+        "key": "severity",
+        "type": "enum",
+        "enum": ["low", "normal", "critical"]
+      },
+      {
+        "key": "status",
+        "type": "enum",
+        "enum": ["open", "waiting", "closed"]
+      },
+      {
+        "key": "owner",
+        "type": "string"
+      }
+    ]
+  }
+}

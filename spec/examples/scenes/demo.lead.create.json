@@ -1,0 +1,52 @@
+{
+  "code": "demo.lead.create",
+  "intent": "lead_create",
+  "sceneType": "create",
+  "label": "Sales lead",
+  "promptHints": [
+    "lead",
+    "prospect",
+    "opportunity",
+    "customer"
+  ],
+  "suggestions": [
+    "create a software lead for Acme Labs",
+    "draft a prospect from the healthcare industry",
+    "create a high priority sales lead"
+  ],
+  "form": {
+    "draftFields": [
+      {
+        "key": "company",
+        "label": "Company",
+        "type": "string",
+        "required": true
+      },
+      {
+        "key": "industry",
+        "label": "Industry",
+        "type": "enum",
+        "required": true,
+        "enum": ["software", "healthcare", "education"]
+      },
+      {
+        "key": "priority",
+        "label": "Priority",
+        "type": "enum",
+        "required": true,
+        "enum": ["low", "normal", "high"]
+      },
+      {
+        "key": "notes",
+        "label": "Notes",
+        "type": "string",
+        "required": true
+      }
+    ]
+  },
+  "host": {
+    "hostKey": "demoLeadFormHost",
+    "mode": "embed_form",
+    "continueRoute": "/demo/leads/new"
+  }
+}
