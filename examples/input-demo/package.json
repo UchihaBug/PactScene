@@ -1,0 +1,14 @@
+{
+  "name": "@pactscene/input-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "demo": "node src/run-demo.mjs"
+  },
+  "dependencies": {
+    "@pactscene/core": "0.1.0",
+    "@pactscene/input": "0.1.0"
+  }
+}
+

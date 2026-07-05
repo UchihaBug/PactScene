@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "build": "npm run generate && npm run build:packages && npm run build --workspace @pactscene/demo-web",
-    "build:packages": "npm run build --workspace @pactscene/core && npm run build --workspace @pactscene/react-runtime",
+    "build:packages": "npm run build --workspace @pactscene/core && npm run build --workspace @pactscene/input && npm run build --workspace @pactscene/react-runtime",
     "dev": "npm run generate && npm run build:packages && npm run dev --workspace @pactscene/demo-web -- --host 127.0.0.1",
     "generate": "node scripts/generate-demo-index.mjs",
     "risk:scan": "node scripts/risk-scan.mjs"
@@ -21,4 +21,3 @@
     "typescript": "^5.5.4"
   }
 }
-

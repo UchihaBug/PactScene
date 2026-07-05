@@ -14,8 +14,10 @@ The AI layer does not become the system of record. It only recognizes intent, ex
 
 - `spec/`: JSON Schemas for scenes, contracts, and assistant cards.
 - `packages/core`: TypeScript scene registry, payload sanitizer, scene graph planner, and rule engine.
+- `packages/input`: Text, OCR, and speech input normalization interfaces with mock adapters.
 - `packages/react-runtime`: React components for workbench panels, scene cards, and inspectors.
 - `examples/demo-web`: A fake-data demo app with neutral order, lead, and incident scenes.
+- `examples/input-demo`: A command-line demo for text, mock OCR, and mock speech input.
 - `gateway-spring`: A Java 17 / Spring Boot reference gateway skeleton with no provider key.
 - `scripts/risk-scan.mjs`: A local publication safety scan for secrets and private terms.
 
